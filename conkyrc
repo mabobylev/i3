@@ -1,0 +1,79 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+ 
+# Update interval in seconds
+update_interval 1.0
+ 
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+#total_run_times 0
+ 
+# Shortens units to a single character (kiB->k, GiB->G, etc.). Default is off.
+short_units yes
+ 
+# How strict should if_up be when testing an interface for being up?
+# The value is one of up, link or address, to check for the interface
+# being solely up, being up and having link or being up, having link
+# and an assigned IP address. 
+if_up_strictness route
+ 
+# Add spaces to keep things from moving about?  This only affects certain objects.
+# use_spacer should have an argument of left, right, or none
+use_spacer left
+ 
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale no
+ 
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+ 
+# Stuff after 'TEXT' will be formatted on screen
+
+TEXT
+# JSON for i3bar
+[
+{ "full_text" : "\
+${if_match "$gw_iface"=="(null)"}\
+ Net Unavailable " , "color" : "\#FF173E" },\
+${endif}\
+${if_match "$gw_iface"=="wlan0"}\
+ wlan0 ${addr wlan0} " , "color" : "\#00CC00" },\
+${endif}\
+${if_match "$gw_iface"=="eth0"}\
+ eth0 ${addr eth0} " , "color" : "\#00CC00" },\
+${endif}\
+
+{ "full_text" : "" , "color" : "\#4C7899" },
+{ "full_text" : " RAM ${memperc}%" , "color" : ${if_match ${memperc}<90}"\#4C7899"${else}"\#CC0000"${endif} },
+{ "full_text" : "" , "color" : "\#4C7899" },
+{ "full_text" : " ROOT ${fs_free_perc /}% " , "color" : ${if_match ${fs_free_perc /}>25}"\#00CC00"${else}"\#CC0000"${endif} },
+{ "full_text" : "" , "color" : "\#4C7899" },
+{ "full_text" : " HOME ${fs_free_perc /home}% " , "color" : ${if_match ${fs_free_perc /home}>25}"\#00CC00"${else}"\#CC0000"${endif} },
+
+{
+"full_text": " CAPS ",
+"color":
+${if_match "${exec xset q | grep 'Caps Lock' | sed 's/.*Caps Lock:[ ]*\([^ ]*\).*/\1/'}"=="on"}"\#00CC00"${else}
+"\#333333"
+${endif}
+},
+{
+"full_text": " NUM ",
+"color":
+${if_match "${exec xset q | grep 'Num Lock' | sed 's/.*Num Lock:[ ]*\([^ ]*\).*/\1/'}"=="on"}"\#00CC00"${else}
+"\#333333"
+${endif}
+},
+{
+"full_text": " ♪: ${exec amixer sget Master,0 | egrep -o '([0-9]+%)' | sed ':a;N;$!ba;s/\n/ /g'} "
+},
+{
+"full_text": " ${time %a %d/%m/%y} ${time %H:%M:%S} ",
+"color": ${if_match ${time %u}>5}"\#CC0000"${else}"\#4C7899"${endif}
+}
+
+],
