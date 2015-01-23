@@ -15,7 +15,9 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Play 10
+#font pango: anorexia 9
+font pango: WerfProFont 12
+#font pango: Play 11
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -58,15 +60,15 @@ new_window pixel 2
 new_float pixel 2
 
 
-set $WS1 1:term
-set $WS2 2:file
-set $WS3 3:inet
-set $WS4 4:media
-set $WS5 5:code
-set $WS6 6:steam
-set $WS7 7:misc1
-set $WS8 8:misc2
-set $WS9 9:docs
+set $WS1 1
+set $WS2 2
+set $WS3 3
+set $WS4 4
+set $WS5 5
+set $WS6 6
+set $WS7 7
+set $WS8 8
+set $WS9 9
 
 # Automatically putting clients on specific workspaces                                      
 assign [instance="urxvt"] $WS1
@@ -269,6 +271,7 @@ workspace_auto_back_and_forth yes
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+#        position top
 #status_command i3status
         status_command $HOME/.config/i3/conkybar.sh
         tray_output primary
@@ -285,8 +288,9 @@ bar {
 }
 
 exec_always --no-startup-id eval `cat $HOME/.fehbg`
+exec --no-startup-id rofi
 #exec --no-startup-id "i3-msg 'workspace 1; append_layout /home/xaoc/.config/i3/workspace-1.json'"
-exec --no-startup-id rxvtcd 
+exec --no-startup-id rxvtcd
 exec --no-startup-id rxvtcd -name ranger -e ranger
 #exec --no-startup-id nautilus
 exec --no-startup-id luakit
