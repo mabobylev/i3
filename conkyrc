@@ -42,35 +42,35 @@ ${if_match "$gw_iface"=="(null)"}\
   " , "color" : "\#FF173E" },\
 ${endif}\
 ${if_match "$gw_iface"=="wlan0"}\
-  ${addr wlan0} " , "color" : "\#00CC00" },\
+  ${addr wlan0}" , "color" : "\#00CC00" },\
 ${endif}\
 ${if_match "$gw_iface"=="eth0"}\
-  ${addr eth0} " , "color" : "\#00CC00" },\
+  ${addr eth0}" , "color" : "\#00CC00" },\
 ${endif}\
 
-{ "full_text" : " ${memperc}% [$membar] " , "color" : ${if_match ${memperc}<90}"\#4C7899"${else}"\#CC0000"${endif} },
-{ "full_text" : " ⛁${fs_free_perc /}% " , "color" : ${if_match ${fs_free_perc /}>25}"\#00CC00"${else}"\#CC0000"${endif} },
-{ "full_text" : " ⛃${fs_free_perc /home}% " , "color" : ${if_match ${fs_free_perc /home}>25}"\#00CC00"${else}"\#CC0000"${endif} },
+{ "full_text" : " ${memperc}% [$membar]" , "color" : ${if_match ${memperc}<90}"\#4C7899"${else}"\#CC0000"${endif} },
+{ "full_text" : " ⛁${fs_free_perc /}%" , "color" : ${if_match ${fs_free_perc /}>25}"\#00CC00"${else}"\#CC0000"${endif} },
+{ "full_text" : " ⛃${fs_free_perc /home}%" , "color" : ${if_match ${fs_free_perc /home}>25}"\#00CC00"${else}"\#CC0000"${endif} },
 
 {
-"full_text": "  CAPS ",
+"full_text": "  CAPS",
 "color":
 ${if_match "${exec xset q | grep 'Caps Lock' | sed 's/.*Caps Lock:[ ]*\([^ ]*\).*/\1/'}"=="on"}"\#00CC00"${else}
 "\#333333"
 ${endif}
 },
 {
-"full_text": "  NUM ",
+"full_text": "  NUM",
 "color":
 ${if_match "${exec xset q | grep 'Num Lock' | sed 's/.*Num Lock:[ ]*\([^ ]*\).*/\1/'}"=="on"}"\#00CC00"${else}
 "\#333333"
 ${endif}
 },
 {
-"full_text": "  ${exec amixer sget Master,0 | egrep -o '([0-9]+%)' | sed ':a;N;$!ba;s/\n/ /g'} "
+"full_text": "  ${exec amixer sget Master,0 | egrep -o '([0-9]+%)' | sed ':a;N;$!ba;s/\n/ /g'}"
 },
 {
-"full_text": "  ${time %a %d/%m/%y}  ${time %H:%M:%S} ",
+"full_text": "  ${time %a %d/%m/%y}  ${time %H:%M:%S}",
 "color": ${if_match ${time %u}>5}"\#CC0000"${else}"\#4C7899"${endif}
 }
 

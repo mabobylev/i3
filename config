@@ -291,7 +291,7 @@ bar {
 }
 
 exec_always --no-startup-id eval `cat $HOME/.fehbg`
-workexec --no-startup-id rofi
+exec --no-startup-id rofi
 #exec --no-startup-id "i3-msg 'workspace 1; append_layout /home/xaoc/.config/i3/workspace-1.json'"
 exec --no-startup-id rxvtcd
 exec --no-startup-id rxvtcd -name ranger -e ranger
