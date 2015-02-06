@@ -9,8 +9,7 @@ set $mod Mod4
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango: anorexia 9
-font pango: WerfProFont 12
-#font pango: Play 11
+font pango: Play 8
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -50,18 +49,23 @@ client.unfocused        $baseB0 $baseA2 $baseB1 $baseA1
 client.urgent           $baseB0 $yellow $baseB3 $orange
 
 new_window pixel 2
-new_float pixel 2
+new_float none
+focus_follows_mouse yes
+force_focus_wrapping yes
 
+# HIDE EDGE BORDERS
+# hide_edge_borders <none|vertical|horizontal|both>
+hide_edge_borders both
 
-set $WS1 1
-set $WS2 2
-set $WS3 3
-set $WS4 4
-set $WS5 5
-set $WS6 6
-set $WS7 7
-set $WS8 8
-set $WS9 9
+set $WS1 ➊
+set $WS2 ➋
+set $WS3 ➌
+set $WS4 ➍
+set $WS5 ➎
+set $WS6 ➏
+set $WS7 ➐
+set $WS8 ➑
+set $WS9 ➒
 
 # Automatically putting clients on specific workspaces                                      
 assign [instance="urxvt"] $WS1
@@ -93,6 +97,8 @@ for_window [instance="^ranger$"] move scratchpad
 for_window [instance="^irssi$"] move scratchpad
 
 for_window [window_role="pop-up"] floating enable,move absolute center
+for_window [window_role="task_dialog"] floating enable
+for_window [title="Preferences$"] floating enable
 
 popup_during_fullscreen ignore
 
@@ -165,6 +171,9 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+
+# Jump to urgent window
+bindsym $mod+x [urgent=latest] focus
 
 # switch to workspace
 bindsym $mod+1 workspace $WS1
@@ -266,6 +275,7 @@ workspace_auto_back_and_forth yes
 bar {
 #        position top
 #status_command i3status
+        font pango: WerfProFont, Icons 9
         status_command $HOME/.config/i3/conkybar.sh
         tray_output primary
         colors {
@@ -281,7 +291,7 @@ bar {
 }
 
 exec_always --no-startup-id eval `cat $HOME/.fehbg`
-exec --no-startup-id rofi
+workexec --no-startup-id rofi
 #exec --no-startup-id "i3-msg 'workspace 1; append_layout /home/xaoc/.config/i3/workspace-1.json'"
 exec --no-startup-id rxvtcd
 exec --no-startup-id rxvtcd -name ranger -e ranger
