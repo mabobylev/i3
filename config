@@ -57,26 +57,45 @@ force_focus_wrapping yes
 # hide_edge_borders <none|vertical|horizontal|both>
 hide_edge_borders both
 
-set $WS1 ➊
-set $WS2 ➋
-set $WS3 ➌
-set $WS4 ➍
-set $WS5 ➎
-set $WS6 ➏
-set $WS7 ➐
-set $WS8 ➑
-set $WS9 ➒
+# term
+set $WS1 1:
+# web
+set $WS2 2:
+# files
+set $WS3 3:
+# mail
+set $WS4 4:
+# code
+set $WS5 5:
+# misc
+set $WS6 6:
+# movie
+set $WS7 7:
+# gaming
+set $WS8 8:
+# science !
+set $WS9 9:
+
+#set $WS1 1:➊
+#set $WS2 2:➋
+#set $WS3 3:➌
+#set $WS4 4:➍
+#set $WS5 5:➎
+#set $WS6 6:➏
+#set $WS7 7:➐
+#set $WS8 8:➑
+#set $WS9 9:➒
 
 # Automatically putting clients on specific workspaces                                      
 assign [instance="urxvt"] $WS1
-assign [class="^URxvt$" instance="^spaceterm$"] $WS2
-assign [class="Spacefm|Nautilus"] $WS2
-assign [class="Uzbl|Pidgin|Chromium|Firefox|luakit"] $WS3
-assign [class="MPlayer|Vlc"] $WS4
-assign [class="jetbrains-android-studio"] $WS5
-assign [class="Gimp|Eclipse"] $WS5
-assign [instance="^sunvox"] $WS5
-assign [class="^Steam" instance="^Steam"] $WS6
+assign [class="^URxvt$" instance="^spaceterm$"] $WS3
+assign [class="Spacefm|Nautilus|Thunar"] $WS3
+assign [class="Uzbl|Pidgin|Chromium|Firefox|luakit"] $WS2
+assign [class="MPlayer|Vlc"] $WS7
+assign [class="jetbrains-studio"] $WS5
+assign [class="Gimp"] $WS6
+assign [instance="^sunvox"] $WS7
+assign [class="^Steam" instance="^Steam"] $WS8
 assign [class="Wine"] $WS6
 assign [instance="^VCLSalFrame"] $WS9
 assign [instance="^libreoffice|^soffice"] $WS9
@@ -87,7 +106,7 @@ for_window [class="Steam" instance="^Steam"] floating enable, focus
 for_window [class="URxvt" instance="^spaceterm$"] floating enable, border normal
 for_window [class="Firefox" instance="^mail.google.com$"] floating enable, focus
 for_window [class="Pidgin|Gpicview|Lxappearance"] floating enable
-for_window [class="Gimp|MPlayer|Nautilus"] floating enable, focus
+for_window [class="Gimp|MPlayer|Nautilus|Spacefm|Thunar"] floating enable, focus
 for_window [class="^Vlc$"] floating enable, focus
 for_window [instance="^VCLSalFrame"] focus
 for_window [instance="^soffice"] floating enable, focus
@@ -103,7 +122,7 @@ for_window [title="Preferences$"] floating enable
 popup_during_fullscreen ignore
 
 ## KEY BINDINGS
-bindsym $MOD+Tab focus right
+bindsym $mod+Tab focus right
 
 #lock screen
 bindsym $mod+Scroll_Lock exec lock
@@ -238,6 +257,8 @@ bindsym $mod+equal move scratchpad
 bindsym $mod+minus scratchpad show
 bindsym $mod+c [instance="^ranger$"] scratchpad show
 
+workspace_auto_back_and_forth yes
+
 bindsym XF86HomePage exec --no-startup-id pidof firefox || firefox
 #bindsym XF86HomePage exec --no-startup-id chromium || chromium
 #bindsym XF86Mail exec --no-startup-id chromium --app=https://mail.google.com
@@ -246,7 +267,7 @@ bindsym XF86PowerOff exec --no-startup-id exit_menu.sh
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master toggle
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
 #"amixer -D pulse sset Master '3%+' unmute"
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -- -5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 #"amixer -D pulse sset Master '1%-' unmute"
 #bindsym XF86AudioPlay exec --no-startup-id deadbeef --play-pause
 #bindsym XF86AudioStop exec --no-startup-id deadbeef --stop
@@ -268,15 +289,19 @@ bindsym --release $mod+Print exec --no-startup-id import -window root /tmp/lates
 # XF86HomePage
 # XF86Sleep
 
-workspace_auto_back_and_forth yes
+# -------------------------------- ROFI -------------------------------------------
+bindsym mod1+F2 exec --no-startup-id rofi -show run
+bindsym mod1+Tab exec --no-startup-id rofi -show window
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        strip_workspace_numbers yes
 #        position top
 #status_command i3status
-        font pango: WerfProFont, Icons 9
+        font pango: WerfProFont, Icons 12
         status_command $HOME/.config/i3/conkybar.sh
+#        status_command i3blocks
         tray_output primary
         colors {
             separator $blue
@@ -290,10 +315,7 @@ bar {
         }
 }
 
-exec_always --no-startup-id eval `cat $HOME/.fehbg`
-exec --no-startup-id rofi
-#exec --no-startup-id "i3-msg 'workspace 1; append_layout /home/xaoc/.config/i3/workspace-1.json'"
+exec_always --no-startup-id feh --bg-scale "$(find /home/xaoc/Pictures/|shuf -n1)"
 exec --no-startup-id rxvtcd
-exec --no-startup-id rxvtcd -name ranger -e ranger
-#exec --no-startup-id nautilus
-exec --no-startup-id luakit
+#exec --no-startup-id rxvtcd -name ranger -e ranger
+#exec --no-startup-id luakit
