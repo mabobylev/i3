@@ -52,6 +52,8 @@ new_window pixel 2
 new_float none
 focus_follows_mouse yes
 force_focus_wrapping yes
+#gaps inner 6
+#gaps outer 0
 
 # HIDE EDGE BORDERS
 # hide_edge_borders <none|vertical|horizontal|both>
@@ -105,7 +107,7 @@ assign [instance="^libreoffice|^soffice"] $WS9
 for_window [class="Steam" instance="^Steam"] floating enable, focus
 for_window [class="URxvt" instance="^spaceterm$"] floating enable, border normal
 for_window [class="Firefox" instance="^mail.google.com$"] floating enable, focus
-for_window [class="Pidgin|Gpicview|Lxappearance"] floating enable
+for_window [class="Pidgin|Gpicview|Lxappearance|Dunst"] floating enable
 for_window [class="Gimp|MPlayer|Nautilus|Spacefm|Thunar"] floating enable, focus
 for_window [class="^Vlc$"] floating enable, focus
 for_window [instance="^VCLSalFrame"] focus
@@ -297,6 +299,7 @@ bindsym mod1+Tab exec --no-startup-id rofi -show window
 # finds out, if available)
 bar {
         strip_workspace_numbers yes
+         separator_symbol "::"
 #        position top
 #status_command i3status
         font pango: WerfProFont, Icons 12
